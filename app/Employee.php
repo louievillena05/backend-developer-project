@@ -1,0 +1,19 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Employee extends Model
+{
+    protected $table = 'employees';
+
+    protected $fillable = [
+        'company_id', 'first_name', 'last_name', 'email', 'phone'
+    ];
+
+    public function company()
+    {
+        return $this->belongsTo('App\Company');
+    }
+}
