@@ -23,6 +23,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        // $companies = Company::paginate(10);
         $companies = Company::all();
 
         return view('company.index')->with(['companies' => $companies]);
