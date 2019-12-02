@@ -133,6 +133,8 @@ class CompanyController extends Controller
         //Delete Company Data
         Company::destroy($company->id);
 
-        return redirect('company');
+        return response()->json([
+            'result' => 'Company deleted successfully!'
+        ]);
     }
 }

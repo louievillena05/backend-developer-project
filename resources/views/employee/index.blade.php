@@ -31,11 +31,7 @@
                     <td>
                         <a href="{{ route('employee.show', $employee->id) }}"><button type="button" class="btn btn-success">Show</button></a>
                         <a href="{{ route('employee.edit', $employee->id) }}"><button type="button" class="btn btn-primary">Edit</button></a>
-                        <form id="delete-employee" action="{{ route('employee.destroy', $employee->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="button" class="btn btn-danger delete-employee">Delete</button>
-                        </form>
+                        <button type="button" class="btn btn-danger delete-employee" data-action="{{ route('employee.destroy', $employee->id) }}">Delete</button>
                     </td>
                 </tr>
                 @endforeach
@@ -56,13 +52,27 @@
             $('#table').DataTable();
         } );
 
-        $(document).ready(function(){
-            $('.delete-employee').on('click', function(){
-                var r = confirm("Delete this Employee?");
-                if (r == true) {
-                    $('#delete-employee').submit();
-                }
-            });
+        $(".delete-employee").click(function(){
+            var r = confirm("Delete this Employee?");
+            if (r == true) {
+                var id = $(this).data("id");
+                var action = $(this).data("action");
+                var token = '{{ csrf_token() }}';
+            
+                $.ajax(
+                {
+                    url: action,
+                    type: 'DELETE',
+                    data: {
+                        "_token": token,
+                    },
+                    success: function (data){
+                        alert(data.result);
+                        location.href = "{{ route('employee.index') }}";
+                    }
+                });
+            }
+        
         });
     </script>
 @stop

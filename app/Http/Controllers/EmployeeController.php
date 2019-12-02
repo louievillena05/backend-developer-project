@@ -103,6 +103,8 @@ class EmployeeController extends Controller
     {
         Employee::destroy($employee->id);
 
-        return redirect('employee');
+        return response()->json([
+            'result' => 'Employee deleted successfully!'
+        ]);
     }
 }
