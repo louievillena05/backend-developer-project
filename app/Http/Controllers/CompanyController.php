@@ -6,6 +6,7 @@ use App\Mail\SendEmail;
 use Illuminate\Support\Facades\Mail;
 
 use App\Company;
+use App\Employee;
 use App\Http\Requests\CompanyRequest;
 use Illuminate\Http\Request;
 
@@ -122,6 +123,9 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        //Delete all Employees under Company
+        Employee::where('company_id', $company->id)->delete();
+
         //Delete Company Logo
         $logo = Company::where('id', $company->id)->value('logo');
         \Storage::delete($logo);
